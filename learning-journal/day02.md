@@ -16,3 +16,9 @@ Things become easy when consistantly doing it
 none for now
 
 ## Tomorrow's Goal
+if, elif, else
+Comparison operators
+Logical operators (and, or, not)
+Loops in more depth
+Functions (your first reusable code)
+A mini project: Employee Salary Eligibility Calculator
