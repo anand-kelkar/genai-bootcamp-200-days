@@ -38,6 +38,21 @@ def display_report():
     print(f"Bonus Amount     : ₹{bonus}")
     print(f"Status           : {employee_status}")
 
+def log_report():
+    with open("01-python\\day04\\employee_report.txt","w",encoding="utf-8") as file:
+        lines_to_write =["==============================\n",
+                         "Employee Report\n",
+                         "==============================\n",
+                         f"Name             : {employee_name}\n",
+                         f"Salary           : ₹{employee_salary}\n",
+                         f"Experience       : {years_of_experience} years\n",
+                         f"Bonus Percentage : {bonus_percent}%\n",
+                         f"Bonus Amount     : ₹{bonus}\n",
+                         f"Status           : {employee_status}\n"
+                         ]
+        file.writelines(lines_to_write)
+       
+
 
 
 employee_details = get_employee_details()
@@ -49,4 +64,4 @@ bonus_percent = 0
 employee_status = ""
 calculate_bonus()
 display_report()
-
+log_report()
