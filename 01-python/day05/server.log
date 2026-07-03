@@ -1,0 +1,7 @@
+INFO User Login
+INFO API Called
+ERROR Database Connection Failed
+INFO Payment Success
+ERROR MQ Timeout
+WARNING Memory Usage High
+INFO Logout
