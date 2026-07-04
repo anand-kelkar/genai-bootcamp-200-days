@@ -1,0 +1,9 @@
+==============================
+Employee Report
+==============================
+Name             : Anand
+Salary           : ₹12000000
+Experience       : 20 years
+Bonus Percentage : 20%
+Bonus Amount     : ₹2400000.0
+Status           : Senior Enterprise Architect
