@@ -1,0 +1,2 @@
+class EnterprisePrompts:
+    pass
