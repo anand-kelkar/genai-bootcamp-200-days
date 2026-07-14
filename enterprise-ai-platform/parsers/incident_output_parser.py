@@ -1,12 +1,6 @@
-# responsibility of this class is to parse LLM output and return JSON string
-import json
-
-class OutputParser:
-    def parse(self):
-        pass
-
+from parsers.output_parser import OutputParser
 class JSONOutputParser(OutputParser):
-    def parse_to_json(self, raw_llm_response):
+    def parse(self, raw_llm_response):
         response_dict = {}
 
         for line in raw_llm_response.strip().split("\n"):

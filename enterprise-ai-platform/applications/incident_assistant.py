@@ -1,15 +1,13 @@
 from models.incident import Incident
 from workflows.incident_analysis_workflow import IncidentWorkflow
-import json
-import prompts.prompt_builder as pb
-import llm.llm_client as llmc
-import parsers.incident_output_parser as inc_op_parser
+from utils.logger import logger
 
 def run_incident_assistant(workflow:IncidentWorkflow) -> None:
     """Collect incident information and execute the analysis workflow."""
 
     print("\nIncident Analysis Assistant")
     print("-" * 50)
+    logger.info(f"Collecting incident details from user")
 
     incident_number = input("Enter incident number: ").strip()
     application = input("Enter application name: ").strip()
@@ -21,30 +19,36 @@ def run_incident_assistant(workflow:IncidentWorkflow) -> None:
         error_message=error_message,
         business_impact=business_impact,
     )
-    formatted_llm_response = workflow.trigger(incident)
+    logger.info(f"incident number : {incident_number}, application :{application}, error :{error_message}, business implact : {business_impact}")
+    logger.info(f"Executing workflow")
+    formatted_llm_response = workflow.execute(incident)
+    logger.info(f"Displaying report")
+
     display_report(incident,formatted_llm_response)
     # incident Report
 
-def display_report(incident, formatted_llm_response):
-    print("=" * 50)
-    print("\nAI Incident Report")
-    print("=" * 50)
-    print("\nIncident Number : ")
-    print(f"\n{incident.incident_number}")
+def format_report(incident:Incident, formatted_llm_response) -> str:
+    report = {
+        "Incident Number": incident.incident_number,
+        "Application": incident.application,
+        "Root Cause": formatted_llm_response["Root Cause"],
+        "Immediate Action": formatted_llm_response["Immediate Action"],
+        "Long-term Prevention": formatted_llm_response["Long-term Prevention"],
+        "Confidence": formatted_llm_response["Confidence"],
+    }
 
-    print("\nApplication : ")
-    print(f"\n{incident.application}\n")
-    print("-" * 50)
-    print("\nRoot Cause : \n")
-    print(formatted_llm_response["Root Cause"])
-    print("-" * 50)
-    print("\nImmediate Action : \n")
-    print(formatted_llm_response["Immediate Action"])
-    print("-" * 50)
-    print("\nLong-term Prevention : \n")
-    print(formatted_llm_response["Long-term Prevention"])
-    print("-" * 50)
-    print("\nConfidence : \n")
-    print(formatted_llm_response["Confidence"])
-    print("-" * 50)
+    lines = [
+        "Incident Analysis Report",
+        "-" * 50,
 
+    ]
+
+    lines.extend(
+        f"{label:<25}: {value}"
+        for label, value in report.items()
+    )
+
+    return "\n".join(lines)
+
+def display_report(incident:Incident, formatted_llm_response) -> None:
+    print(format_report(incident,formatted_llm_response))

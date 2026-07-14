@@ -1,7 +1,7 @@
 from applications.incident_assistant import run_incident_assistant
-import prompts.prompt_builder as pb
-import llm.llm_client as llmc
-import parsers.incident_output_parser as inc_op_parser
+from prompts.prompt_builder import PromptBuilder
+from  llm.openai_llm_client import OpenAILLMClient
+from parsers.incident_output_parser import JSONOutputParser
 from workflows.incident_analysis_workflow import IncidentWorkflow
 
 def main() -> None:
@@ -9,9 +9,9 @@ def main() -> None:
     print("=" * 50)
     print("Enterprise AI Platform")
     print("=" * 50)
-    prompt_builder = pb.PromptBuilder()
-    llm_client = llmc.OpenAILLMClient()
-    parser = inc_op_parser.JSONOutputParser()
+    prompt_builder = PromptBuilder()
+    llm_client = OpenAILLMClient()
+    parser = JSONOutputParser()
 
     workflow = IncidentWorkflow(prompt_builder,llm_client,parser)
     run_incident_assistant(workflow)
